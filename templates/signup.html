@@ -1,0 +1,32 @@
+<html>
+    <head>
+      <title>Dojos Page</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+      <!--<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>-->
+    </head>
+    <body>
+      <div class="wrapper">
+      <div class="header"><h1>Registration Page</h1></div>
+      <form class="index" action='/register' method='post'>
+              
+          <p>First Name: <input type='text' name='first_name'></p>
+          <p>Last Name: <input type='text' name='last_name'></p>
+          <p>Email Address: <input type='text' name='email'></p>
+          <p>Password: <input type='text' name='password'></p>
+          <p>Confirm Password: <input type='text' name='confirm_password'></p>
+          <input type='submit' id='button' value='Submit'>
+      </form>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <h3>{{ message }}</h3>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+
+      </div>
+    </body>
+</html>
+
+

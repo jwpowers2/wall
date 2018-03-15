@@ -1,0 +1,103 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Josefine Sans', sans-serif;
+    border: 2px dashed black;
+}
+
+img {
+margin: 0 auto;
+}
+
+.header {
+top:0;
+display: block;
+text-align:left;
+height: 100px;
+background-color:yellow;
+}
+
+.header h1{
+margin: 50px;
+float: left;
+
+}
+.header img{
+
+float: right;
+
+}
+
+.wrapper {
+background-color:orange;
+width: 1000px;
+height: 100%;
+margin: 0 auto;
+text-align:center;
+color:black;
+padding: 20px;
+
+}
+
+
+
+.index {
+border: 2px solid black;
+font-family: sans-serif;
+width: 350px;
+margin: 10 auto;
+text-align:center;
+color:black;
+padding: 40px;
+}
+
+p {
+text-align: left;
+font-size: 15px;
+margin-bottom:20px;
+}
+
+input{
+float:right;
+width: 150px;
+}
+
+select{
+float:right;
+width: 150px;
+}
+
+textarea{
+width: 330px;
+height:100px;
+}
+
+#button{
+margin: 10px 20px 10px 0px;
+height: 20px;
+width: 60px;
+}
+
+#container{
+padding: 30px;
+height: 200px;
+width: 200px;
+border: 2px solid black;
+text-align:center;
+margin: 0 auto;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}

@@ -1,0 +1,12 @@
+<html>
+    <head>
+      <title>Error Page</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+      <!--<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>-->
+    </head>
+    <body>
+      <h1>These are not the Ninjas you are looking for
+      <img src="{{ url_for('static', filename=file_path) }}">
+      </h1>
+    </body>
+</html>
