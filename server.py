@@ -18,10 +18,11 @@ mysql = MySQLConnector(app,'wall')
 @app.route('/')
 
 def index():
-
+    # need to clear all flashes?
     if 'status' not in session:
         session['status'] = 'False'
         session['first_name'] = ''
+        session['id'] = 0
         flash("Welcome to the Wall, Login or register to have a look at what is going on!")
 
     if session['status'] == 'True':
@@ -54,8 +55,8 @@ def login():
 
         if bcrypt.checkpw(request.form['password'].encode(), users[0]['password'].encode()):
             session['status'] = 'True'
-            first_name = users[0]['first_name']
-            session['first_name'] = first_name
+            session['id'] = users[0]['id']
+            session['first_name'] = users[0]['first_name']
             return redirect('/wall')
         else:
             session['status'] = 'False'
@@ -118,9 +119,10 @@ def register():
         if type(good_register) == long:
 
             session['status'] = 'True'
-            name_query = "SELECT first_name FROM users WHERE email = '{}'".format(request.form['email'])
-            first_name = mysql.query_db(name_query)
-            session['first_name'] = first_name[0].get('first_name')
+            name_query = "SELECT id,first_name FROM users WHERE email = '{}'".format(request.form['email'])
+            person = mysql.query_db(name_query)
+            session['first_name'] = person[0].get('first_name')
+            session['id'] = person[0].get('id')
             return redirect('/wall')
 
         else:
@@ -134,7 +136,10 @@ def register():
 def wall():
     # this will display the wall
     # show a message and all its related comments sorted so newest posts show up at top
-    return render_template('wall.html')
+
+    # display a list of objects with messages + comments
+    # build list of dictionaries using select all from messages
+    return render_template('wall.html', messages = mysql.query_db("SELECT * from messages"))
 
 @app.route('/messages', methods=['POST'])
 
@@ -143,6 +148,25 @@ def messages():
     # show a message and all its related comments sorted so newest posts show up at top
     # makes a message from a form on wall.html and insert into messages DB
     print request.form['message']
+    print type(session['id'])
+    now = datetime.datetime.utcnow()
+    query = "INSERT INTO messages (user_id, message, created_at, updated_at) VALUES (:user_id,:message,:created_at, :updated_at)"
+
+    data = {
+            'user_id': session['id'],
+            'message': request.form['message'],
+	    'created_at':now,
+	    'updated_at':now
+           }
+
+    add_message = mysql.query_db(query, data)
+
+    if type(add_message) == long:
+        return redirect('/wall')
+
+    else:
+        return redirect('/wall')
+
     return redirect('/wall')
 
 @app.route('/comments', methods=['POST'])

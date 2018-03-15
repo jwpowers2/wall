@@ -17,6 +17,14 @@
             <textarea name='message'></textarea>
             <input type='submit' id='button' value='Submit'>
             </form>
+      <table>
+      {% for message in messages %}
+      <tr>
+        <td>{{ message['message']}}</td> 
+        <td>{{ session['first_name']}}</td>
+      </tr>
+      {% endfor %}
+      </table>
         </div>
     </body>
 </html>
