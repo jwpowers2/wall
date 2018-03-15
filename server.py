@@ -134,21 +134,22 @@ def register():
 @app.route('/wall')
 
 def wall():
-    # this will display the wall
-    # show a message and all its related comments sorted so newest posts show up at top
 
-    # display a list of objects with messages + comments
-    # build list of dictionaries using select all from messages
-    return render_template('wall.html', messages = mysql.query_db("SELECT * from messages"))
+    messages_list = mysql.query_db("SELECT * from messages JOIN users on messages.user_id = users.id")
+
+    for message in messages_list:
+
+        comment_list = mysql.query_db("SELECT comment from comments where message_id = {}".format(message.get('id')))
+        print comment_list
+        message['comments'] = comment_list
+
+    return render_template('wall.html', messages_list=messages_list)
+    
 
 @app.route('/messages', methods=['POST'])
 
 def messages():
-    # this will display the wall
-    # show a message and all its related comments sorted so newest posts show up at top
-    # makes a message from a form on wall.html and insert into messages DB
-    print request.form['message']
-    print type(session['id'])
+
     now = datetime.datetime.utcnow()
     query = "INSERT INTO messages (user_id, message, created_at, updated_at) VALUES (:user_id,:message,:created_at, :updated_at)"
 
@@ -169,12 +170,30 @@ def messages():
 
     return redirect('/wall')
 
-@app.route('/comments', methods=['POST'])
+@app.route('/comments/<int:message_id>', methods=['POST'])
 
-def comments():
-    # this will display the wall
-    # show a message and all its related comments sorted so newest posts show up at top
-    pass
+def comments(message_id):
+    # I am creating all comments with the same message id
+    # ?
+    print message_id
+    
+    now = datetime.datetime.utcnow()
+    query = "INSERT INTO comments (message_id, user_id, comment, created_at, updated_at) VALUES (:message_id,:user_id, :comment,:created_at, :updated_at)"
+
+    data = {
+            'message_id': message_id,
+            'user_id': request.form['user_id'],
+            'comment': request.form['comment'],
+	    'created_at':now,
+	    'updated_at':now
+           }
+    
+    print message_id
+    print request.form['user_id']
+    
+    add_comment = mysql.query_db(query, data)
+    
+    return redirect('/wall')
 
 
 @app.route('/logoff', methods=['GET'])

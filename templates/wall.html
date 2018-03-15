@@ -18,11 +18,20 @@
             <input type='submit' id='button' value='Submit'>
             </form>
       <table>
-      {% for message in messages %}
-      <tr>
-        <td>{{ message['message']}}</td> 
-        <td>{{ session['first_name']}}</td>
-      </tr>
+      {% for message in messages_list %}
+        <h3>{{ message['message']}}</h3> 
+        <p>{{message['id']}}</p> 
+        
+	<form action='/comments/{{message['id']}}' method='post'>
+        {% if message['comments'] %}
+        {% for comment in message['comments'] %}
+            <p>{{comment['comment']}}</p>
+	{% endfor %}
+        {% endif %}
+        <textarea name='comment'></textarea>
+        <input type='hidden' name='user_id' value='{{message['user_id']}}'>
+        <input type='submit' id='button' value='Submit'>
+        </form>
       {% endfor %}
       </table>
         </div>
