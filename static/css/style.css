@@ -1,8 +1,7 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: 'Josefine Sans', sans-serif;
-    border: 2px dashed black;
+    font-family: 'IBM Plex Mono', monospace;
 }
 
 img {
@@ -14,7 +13,7 @@ top:0;
 display: block;
 text-align:left;
 height: 100px;
-background-color:yellow;
+background-color:magenta;
 }
 
 .header h1{
@@ -22,20 +21,20 @@ margin: 50px;
 float: left;
 
 }
-.header img{
+.header a{
 
 float: right;
 
 }
 
 .wrapper {
-background-color:orange;
+background-color:#f2f2f2;
 width: 1000px;
+font-family: 'IBM Plex Mono', monospace;
 height: 100%;
 margin: 0 auto;
 text-align:center;
 color:black;
-padding: 20px;
 
 }
 
@@ -43,7 +42,6 @@ padding: 20px;
 
 .index {
 border: 2px solid black;
-font-family: sans-serif;
 width: 350px;
 margin: 10 auto;
 text-align:center;
@@ -70,6 +68,8 @@ width: 150px;
 textarea{
 width: 330px;
 height:100px;
+background-color:transparent;
+border:1px solid black;
 }
 
 #button{
@@ -87,7 +87,6 @@ text-align:center;
 margin: 0 auto;
 }
 table {
-    font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }

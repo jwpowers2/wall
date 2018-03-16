@@ -3,7 +3,7 @@
         <!-- index page has login form called login -->
         <title>The Wall</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!--<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>-->
     </head>
@@ -13,11 +13,12 @@
                 <p>Welcome {{ session['first_name'] }}</p><a href="/logoff"><button>Logoff</button></a>
         </div>
 	    <form action='/messages' method='post'>
-            <p>Add a message</p> 
+            <h3>Add a message</h3> 
             <textarea name='message'></textarea>
             <input type='submit' id='button' value='Submit'>
             </form>
-
+            <br>
+            <br>
       {% for message in messages_list %}
 
         <h3>{{ message['message']}}</h3> 
