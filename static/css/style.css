@@ -8,6 +8,10 @@ img {
 margin: 0 auto;
 }
 
+.new_message{
+
+}
+
 .header {
 top:0;
 display: block;
@@ -21,14 +25,14 @@ margin: 50px;
 float: left;
 
 }
-.header a{
-
+.header h3{
+margin: 20px;
 float: right;
 
 }
 
 .wrapper {
-background-color:#f2f2f2;
+background-color:transparent;
 width: 1000px;
 font-family: 'IBM Plex Mono', monospace;
 height: 100%;
@@ -88,13 +92,14 @@ margin: 0 auto;
 }
 table {
     border-collapse: collapse;
-    width: 100%;
+    
 }
 
 td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+    
 }
 
 tr:nth-child(even) {

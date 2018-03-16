@@ -133,13 +133,21 @@ def register():
 
 def wall():
 
-    messages_list = mysql.query_db("SELECT messages.id,messages.message from messages group by messages.id")
+    # join users to get names out of this
+    messages_list = mysql.query_db("SELECT messages.id,messages.message,messages.created_at,users.first_name, users.last_name from messages JOIN users ON messages.user_id = users.id group by messages.id")
 
     for message in messages_list:
-
-        comment_list = mysql.query_db("SELECT comment from comments where message_id = {}".format(message.get('id')))
-        message['comments'] = comment_list
-
+        
+        # join users to get names too
+        # make dictionary with name: comment_list
+        comment_dict = {}
+        comments = mysql.query_db("SELECT comments.comment,comments.created_at,users.first_name, users.last_name from comments JOIN users ON comments.user_id = users.id where message_id = {}".format(message.get('id')))
+        # need to get name for coment maker
+        comment_dict['comment_list'] = comments
+        # comments in message in message_list has a dictionary with name and comment_list in it
+        message['comments'] = comment_dict
+        
+        print message['comments']
     return render_template('wall.html', messages_list=messages_list)
     
 
