@@ -1,6 +1,4 @@
 #!/usr/bin/pyton
-# an insert returns last row index/id something like that
-# The Wall
 
 import re
 import datetime
@@ -18,7 +16,7 @@ mysql = MySQLConnector(app,'wall')
 @app.route('/')
 
 def index():
-    # need to clear all flashes?
+
     if 'status' not in session:
         session['status'] = 'False'
         session['first_name'] = ''
@@ -135,12 +133,11 @@ def register():
 
 def wall():
 
-    messages_list = mysql.query_db("SELECT * from messages JOIN users on messages.user_id = users.id")
+    messages_list = mysql.query_db("SELECT messages.id,messages.message from messages group by messages.id")
 
     for message in messages_list:
 
         comment_list = mysql.query_db("SELECT comment from comments where message_id = {}".format(message.get('id')))
-        print comment_list
         message['comments'] = comment_list
 
     return render_template('wall.html', messages_list=messages_list)
@@ -163,6 +160,7 @@ def messages():
     add_message = mysql.query_db(query, data)
 
     if type(add_message) == long:
+
         return redirect('/wall')
 
     else:
@@ -170,26 +168,22 @@ def messages():
 
     return redirect('/wall')
 
-@app.route('/comments/<int:message_id>', methods=['POST'])
+@app.route('/comments/<int:message_id>/<int:user_id>', methods=['POST'])
 
-def comments(message_id):
-    # I am creating all comments with the same message id
-    # ?
-    print message_id
+def comments(message_id,user_id):
     
     now = datetime.datetime.utcnow()
     query = "INSERT INTO comments (message_id, user_id, comment, created_at, updated_at) VALUES (:message_id,:user_id, :comment,:created_at, :updated_at)"
 
     data = {
             'message_id': message_id,
-            'user_id': request.form['user_id'],
+            'user_id': user_id,
             'comment': request.form['comment'],
 	    'created_at':now,
 	    'updated_at':now
            }
     
-    print message_id
-    print request.form['user_id']
+    print message_id,user_id
     
     add_comment = mysql.query_db(query, data)
     
